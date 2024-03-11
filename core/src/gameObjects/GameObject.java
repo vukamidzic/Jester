@@ -3,6 +3,7 @@ package gameObjects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public abstract class GameObject extends Actor {
@@ -18,8 +19,17 @@ public abstract class GameObject extends Actor {
         this.setName(_name);
         this.tex = new Texture(
                 Gdx.files.internal(
-                        String.format("%s.png", this.getName().toLowerCase())
+                        String.format("assets/%s.png", this.getName().toLowerCase())
                 )
+        );
+    }
+
+    public void drawObject(SpriteBatch batch) {
+        batch.draw(
+            this.tex,
+            this.getX(), this.getY(), this.getWidth(), this.getHeight(),
+            0, 0, this.tex.getWidth(), this.tex.getHeight(),
+            false, false
         );
     }
 }
