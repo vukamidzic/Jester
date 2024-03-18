@@ -14,5 +14,5 @@ public class CourtPerson extends GameObject {
     enum State {IDLE, CHEERFUL, OFFENDED }
 
     // yet to be changed
-    enum Party { RED, BLUE }
+    public enum Party { RED, BLACK }
 }

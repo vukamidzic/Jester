@@ -8,22 +8,27 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import gameObjects.*;
 import managers.CourtManager;
+import managers.CupManager;
 
 public class Jester extends ApplicationAdapter {
 	SpriteBatch batch;
 
 	Texture table;
 	Texture wall;
+	Texture jester;
 
 	King king;
 	CourtManager courtManager;
+	CupManager cupManager;
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		table = new Texture(Gdx.files.internal("assets/table.png"));
 		wall = new Texture(Gdx.files.internal("assets/wall.png"));
+		jester = new Texture(Gdx.files.internal("assets/jester.png"));
 		king = new King(830.0f, 430.0f, 300.0f, 425.0f, "king");
 		courtManager = new CourtManager(king);
+		cupManager = new CupManager(courtManager);
 	}
 
 	@Override
@@ -38,6 +43,13 @@ public class Jester extends ApplicationAdapter {
 		drawEnviron(wall, table);
 		king.drawObject(batch);
 		courtManager.drawObjects(batch);
+		cupManager.drawObjects(batch);
+		batch.draw(
+				jester,
+				0.0f, 0.0f, 300.0f, 500.0f,
+				0, 0, jester.getWidth(), jester.getHeight(),
+				false, false
+		);
 		batch.end();
 	}
 	
