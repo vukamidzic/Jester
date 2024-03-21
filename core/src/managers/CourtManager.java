@@ -5,8 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import gameObjects.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
 
 public class CourtManager {
     ArrayList<CourtPerson> people;
@@ -26,11 +25,25 @@ public class CourtManager {
         }
     }
 
+    public int getPersonIndex(Cup cup) {
+        for (int i = 0; i < this.people.size(); ++i) {
+            if (cup.getX() == this.people.get(i).getX())
+                return i;
+        }
+
+        return -1;
+    }
+
     private void populateTable(King king) {
         int killerIndex = (int)Math.floor(Math.random() * 8);
         Gdx.app.log("INFO", String.format("Killer pos at table: %d", killerIndex));
         populateLeftSide(king, killerIndex);
         populateRightSide(king, killerIndex);
+
+        System.err.println("Persons:");
+        for (CourtPerson person : this.people) {
+            System.err.println("(" + person.getX() + "," + person.getY() + ")");
+        }
     }
 
     private void populateLeftSide(King king, int killerIndex) {
@@ -76,6 +89,8 @@ public class CourtManager {
             this.people.add(person);
             x = newX;
         }
+
+        Collections.reverse(this.people);
     }
 
     private void populateRightSide(King king, int killerIndex) {
@@ -86,12 +101,12 @@ public class CourtManager {
         personTypes.add("knight");
 
         float space = 100.0f;
-        float x = king.getX() + king.getWidth()/2 - 80.0f, y = king.getY();
+        float x = king.getX() + king.getWidth() / 2 - 80.0f, y = king.getY();
         int index;
 
         for (index = 4; index < 8; ++index) {
-            float newX = x + space + king.getWidth()/3;
-            String objectName = personTypes.get((int)Math.floor(Math.random()*3));
+            float newX = x + space + king.getWidth() / 3;
+            String objectName = personTypes.get((int) Math.floor(Math.random() * 3));
             CourtPerson person;
 
             if (index == killerIndex) {
@@ -102,8 +117,7 @@ public class CourtManager {
                         king.getHeight() - 100.0f,
                         String.format("%s_%s_idle", objectName, currParty.toString().toLowerCase())
                 );
-            }
-            else {
+            } else {
                 person = new Neutral(
                         newX,
                         y,
@@ -121,6 +135,4 @@ public class CourtManager {
             x = newX;
         }
     }
-
-    // TODO define functions for managing CourtPerson objects
 }

@@ -39,6 +39,10 @@ public class Jester extends ApplicationAdapter {
 			Gdx.app.exit();
 		}
 
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+			cupManager.moveCups(courtManager);
+		}
+
 		batch.begin();
 		drawEnviron(wall, table);
 		king.drawObject(batch);
